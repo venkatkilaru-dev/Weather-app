@@ -44,4 +44,29 @@ public class WeatherStorageService
         var json = await File.ReadAllTextAsync(filePath);
         return JsonSerializer.Deserialize<WeatherDataResponse>(json);
     }
+    public IEnumerable<string> GetAllStoredDates()
+{
+    if (!Directory.Exists(_folderPath))
+        yield break;
+
+    foreach (var file in Directory.GetFiles(_folderPath, "*.json"))
+    {
+        var fileName = Path.GetFileNameWithoutExtension(file);
+        yield return fileName; // this is the ISO date
+    }
+}
+public async Task<List<WeatherDataResponse>> LoadAllAsync()
+{
+    var results = new List<WeatherDataResponse>();
+
+    foreach (var date in GetAllStoredDates())
+    {
+        var data = await LoadAsync(date);
+        if (data != null)
+            results.Add(data);
+    }
+
+    return results;
+}
+
 }

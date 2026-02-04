@@ -44,6 +44,11 @@ app.MapGet("/api/weather/{date}", async (string date, WeatherOrchestrator orches
     var result = await orchestrator.GetOrFetchAsync(date);
     return Results.Ok(result);
 });
+app.MapGet("/api/weather", async (WeatherStorageService storage) =>
+{
+    var all = await storage.LoadAllAsync();
+    return Results.Ok(all);
+});
 
 app.UseAntiforgery();
 
