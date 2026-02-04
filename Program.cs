@@ -14,6 +14,8 @@ builder.Services.AddSingleton<DateParsingService>(sp =>
 });
 
 builder.Services.AddHttpClient<OpenMeteoClient>();
+builder.Services.AddSingleton<WeatherOrchestrator>();
+builder.Services.AddSingleton<WeatherStorageService>();
 
 var app = builder.Build();
 
@@ -35,6 +37,11 @@ app.MapGet("/api/test-dates", (DateParsingService parser) =>
 app.MapGet("/api/test-weather/{date}", async (string date, OpenMeteoClient client) =>
 {
     var result = await client.GetWeatherForDateAsync(date);
+    return Results.Ok(result);
+});
+app.MapGet("/api/weather/{date}", async (string date, WeatherOrchestrator orchestrator) =>
+{
+    var result = await orchestrator.GetOrFetchAsync(date);
     return Results.Ok(result);
 });
 
