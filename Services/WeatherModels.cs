@@ -1,22 +1,49 @@
+using System.Text.Json.Serialization;
+
 namespace WeatherHistoryDataRecorder.Services;
+
+public class WeatherDataResponse
+{
+    public bool Success { get; set; }
+    public string? Date { get; set; }
+    public double? TemperatureMin { get; set; }
+    public double? TemperatureMax { get; set; }
+    public double? PrecipitationSum { get; set; }
+    public string? Error { get; set; }
+}
 
 public class DailyWeatherResponse
 {
-    public DailyUnits? DailyUnits { get; set; }
+    [JsonPropertyName("daily")]
     public DailyData? Daily { get; set; }
+
+    [JsonPropertyName("daily_units")]
+    public DailyUnits? DailyUnits { get; set; }
 }
 
 public class DailyUnits
 {
+    [JsonPropertyName("temperature_2m_min")]
     public string? Temperature_2m_min { get; set; }
+
+    [JsonPropertyName("temperature_2m_max")]
     public string? Temperature_2m_max { get; set; }
+
+    [JsonPropertyName("precipitation_sum")]
     public string? Precipitation_sum { get; set; }
 }
 
 public class DailyData
 {
+    [JsonPropertyName("time")]
     public List<string>? Time { get; set; }
+
+    [JsonPropertyName("temperature_2m_min")]
     public List<double>? Temperature_2m_min { get; set; }
+
+    [JsonPropertyName("temperature_2m_max")]
     public List<double>? Temperature_2m_max { get; set; }
+
+    [JsonPropertyName("precipitation_sum")]
     public List<double>? Precipitation_sum { get; set; }
 }

@@ -7,11 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-builder.Services.AddScoped<DateParsingService>(sp =>
+builder.Services.AddSingleton<DateParsingService>(sp =>
 {
     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "dates.txt");
     return new DateParsingService(filePath);
 });
+
+builder.Services.AddHttpClient<OpenMeteoClient>();
 
 var app = builder.Build();
 
@@ -23,12 +25,17 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.MapGet("/api/test-dates", (DateParsingService parser) =>
 {
     var results = parser.ReadAndParseAllDates();
     return Results.Ok(results);
+});
+app.MapGet("/api/test-weather/{date}", async (string date, OpenMeteoClient client) =>
+{
+    var result = await client.GetWeatherForDateAsync(date);
+    return Results.Ok(result);
 });
 
 app.UseAntiforgery();

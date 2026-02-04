@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WeatherHistoryDataRecorder")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a4d675cea14ac6dca328f87c0ef9e3c39937ecfe")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6e1c283042a430ab03edc6d439e11cad7a3f3b0e")]
 [assembly: System.Reflection.AssemblyProductAttribute("WeatherHistoryDataRecorder")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WeatherHistoryDataRecorder")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
