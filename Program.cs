@@ -1,10 +1,17 @@
 using WeatherHistoryDataRecorder.Components;
+using WeatherHistoryDataRecorder.Services;
+using WeatherHistoryDataRecorder.Components.Pages;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.AddScoped<DateParsingService>(sp =>
+{
+    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "dates.txt");
+    return new DateParsingService(filePath);
+});
 
 var app = builder.Build();
 
@@ -18,6 +25,11 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.MapGet("/api/test-dates", (DateParsingService parser) =>
+{
+    var results = parser.ReadAndParseAllDates();
+    return Results.Ok(results);
+});
 
 app.UseAntiforgery();
 

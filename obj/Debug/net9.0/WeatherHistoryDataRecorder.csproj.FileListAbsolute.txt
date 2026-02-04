@@ -76,3 +76,4 @@ D:\dotnet\WeatherHistoryDataRecorder\obj\Debug\net9.0\refint\WeatherHistoryDataR
 D:\dotnet\WeatherHistoryDataRecorder\obj\Debug\net9.0\WeatherHistoryDataRecorder.pdb
 D:\dotnet\WeatherHistoryDataRecorder\obj\Debug\net9.0\WeatherHistoryDataRecorder.genruntimeconfig.cache
 D:\dotnet\WeatherHistoryDataRecorder\obj\Debug\net9.0\ref\WeatherHistoryDataRecorder.dll
+D:\dotnet\WeatherHistoryDataRecorder\obj\Debug\net9.0\WeatherHistoryDataRecorder.sourcelink.json
