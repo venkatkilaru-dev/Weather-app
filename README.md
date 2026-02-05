@@ -48,14 +48,14 @@ This repository was created as part of a coding assignment and demonstrates:
 ## 📦 How to Run the Backend
 
 ### 1. Clone the repository
-git clone https://github.com/venkatkilaru-dev/Weather-app.git
-cd Weather-app
+- git clone https://github.com/venkatkilaru-dev/Weather-app.git
+- cd Weather-app
 
 ### 2. Restore and build
-dotnet build
+- dotnet build
 
 ### 3. Run the Backend
-dotnet run
+- dotnet run
 
 ### 4. Test the API
  - http://localhost:5291/api/weather → return all stored weather entries
@@ -65,7 +65,7 @@ dotnet run
 ### How to run the UI 
 
 ### 1. Start the app
-dotnet run
+- dotnet run
 
 ### 2. Open the UI
  - http://localhost:5291/weather
