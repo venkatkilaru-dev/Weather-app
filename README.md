@@ -6,7 +6,6 @@ Calling a weather api and doing the necessary steps to show the weather
 This project reads dates from a text file, fetches historical weather data from the Open‑Meteo API, stores the results locally, exposes backend endpoints, and displays the aggregated data in a Blazor UI.
 
 This repository was created as part of a coding assignment and demonstrates:
-- File parsing
 - API integration
 - Local JSON storage
 - Backend API design
