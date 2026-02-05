@@ -58,9 +58,9 @@ dotnet build
 dotnet run
 
 ### 4. Test the API
-http://localhost:5291/api/weather
-http://localhost:5291/api/weather/2021-06-30
-http://localhost:5291/api/test-dates
+ - http://localhost:5291/api/weather → return all stored weather entries
+ - http://localhost:5291/api/weather/2021-06-30 → fetch or load a single date
+ - http://localhost:5291/api/test-dates →parsed date list
 
 ### How to run the UI 
 
@@ -68,7 +68,7 @@ http://localhost:5291/api/test-dates
 dotnet run
 
 ### 2. Open the UI
-http://localhost:5291/weather
+ - http://localhost:5291/weather
 
 
 You should see:
