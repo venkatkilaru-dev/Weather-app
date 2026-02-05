@@ -1,64 +1,97 @@
 ﻿@page "/weather"
-@attribute [StreamRendering]
+@inject IHttpClientFactory ClientFactory
+@rendermode InteractiveServer
+@using WeatherHistoryDataRecorder.Services
 
-<PageTitle>Weather</PageTitle>
+<h3>Weather History</h3>
 
-<h1>Weather</h1>
-
-<p>This component demonstrates showing data.</p>
-
-@if (forecasts == null)
+@if (isLoading)
 {
-    <p><em>Loading...</em></p>
+    <p>Loading weather data...</p>
+}
+else if (errorMessage != null)
+{
+    <p style="color:red">@errorMessage</p>
 }
 else
 {
+    <div>
+        <button @onclick="SortByDate">Sort by Date</button>
+        <button @onclick="SortByTemp">Sort by Max Temp</button>
+    </div>
+
     <table class="table">
         <thead>
             <tr>
                 <th>Date</th>
-                <th aria-label="Temperature in Celsius">Temp. (C)</th>
-                <th aria-label="Temperature in Farenheit">Temp. (F)</th>
-                <th>Summary</th>
+                <th>Min Temp</th>
+                <th>Max Temp</th>
+                <th>Precipitation</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var w in weather)
             {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                <tr @onclick="() => Select(w)" style="cursor:pointer">
+                    <td>@w.Date</td>
+                    <td>@w.TemperatureMin</td>
+                    <td>@w.TemperatureMax</td>
+                    <td>@w.PrecipitationSum</td>
                 </tr>
             }
         </tbody>
     </table>
+
+    @if (selected != null)
+    {
+        <div style="margin-top:20px; padding:10px; border:1px solid #ccc">
+            <h4>Details for @selected.Date</h4>
+            <p>Min Temp: @selected.TemperatureMin</p>
+            <p>Max Temp: @selected.TemperatureMax</p>
+            <p>Precipitation: @selected.PrecipitationSum</p>
+            @if (selected.Error != null)
+            {
+                <p style="color:red">Error: @selected.Error</p>
+            }
+        </div>
+    }
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    List<WeatherDataResponse> weather = new();
+    WeatherDataResponse? selected;
+    bool isLoading = true;
+    string? errorMessage;
 
-    protected override async Task OnInitializedAsync()
+   protected override async Task OnInitializedAsync()
+{
+    try
     {
-        // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(500);
-
-        var startDate = DateOnly.FromDateTime(DateTime.Now);
-        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-        forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = startDate.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = summaries[Random.Shared.Next(summaries.Length)]
-        }).ToArray();
+        var http = ClientFactory.CreateClient("backend");
+        weather = await http.GetFromJsonAsync<List<WeatherDataResponse>>("/api/weather");
+    }
+    catch (Exception ex)
+    {
+        errorMessage = $"Failed to load weather data: {ex.Message}";
     }
 
-    private class WeatherForecast
+    isLoading = false;
+    StateHasChanged(); 
+}
+
+    void SortByDate()
+{
+    weather = weather.OrderBy(w => w.Date).ToList();
+    StateHasChanged();
+}
+
+void SortByTemp()
+{
+    weather = weather.OrderByDescending(w => w.TemperatureMax ?? double.MinValue).ToList();
+    StateHasChanged();
+}
+    void Select(WeatherDataResponse w)
     {
-        public DateOnly Date { get; set; }
-        public int TemperatureC { get; set; }
-        public string? Summary { get; set; }
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        selected = w;
     }
 }

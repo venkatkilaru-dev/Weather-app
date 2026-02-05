@@ -16,7 +16,10 @@ builder.Services.AddSingleton<DateParsingService>(sp =>
 builder.Services.AddHttpClient<OpenMeteoClient>();
 builder.Services.AddSingleton<WeatherOrchestrator>();
 builder.Services.AddSingleton<WeatherStorageService>();
-
+builder.Services.AddHttpClient("backend", client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5291"); 
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -49,6 +52,7 @@ app.MapGet("/api/weather", async (WeatherStorageService storage) =>
     var all = await storage.LoadAllAsync();
     return Results.Ok(all);
 });
+
 
 app.UseAntiforgery();
 

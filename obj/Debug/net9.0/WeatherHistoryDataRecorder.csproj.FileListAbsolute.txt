@@ -78,3 +78,5 @@ D:\dotnet\WeatherHistoryDataRecorder\obj\Debug\net9.0\WeatherHistoryDataRecorder
 D:\dotnet\WeatherHistoryDataRecorder\obj\Debug\net9.0\ref\WeatherHistoryDataRecorder.dll
 D:\dotnet\WeatherHistoryDataRecorder\obj\Debug\net9.0\WeatherHistoryDataRecorder.sourcelink.json
 D:\dotnet\WeatherHistoryDataRecorder\bin\Debug\net9.0\weather-data\2021-02-27.json
+D:\dotnet\WeatherHistoryDataRecorder\bin\Debug\net9.0\weather-data\2021-02-28.json
+D:\dotnet\WeatherHistoryDataRecorder\bin\Debug\net9.0\weather-data\2021-06-30.json
