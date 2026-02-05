@@ -72,6 +72,6 @@ http://localhost:5291/weather
 
 
 You should see:
-A loading message
-A table of weather entries
-Sorting buttons
+- A loading message
+- A table of weather entries
+- Sorting buttons
